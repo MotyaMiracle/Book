@@ -9,9 +9,21 @@ namespace ExampleInBook
 {
     class Program
     {
+        static IEnumerable<int> QuickSort(IEnumerable<int> List)
+        {
+            if (List.Count() < 1) return List;
+            else
+            {
+                var pivot = List.First();
+                var less = List.Skip(1).Where(i => i <= pivot);
+                var greater = List.Skip(1).Where(i => i > pivot);
+                return QuickSort(less).Union(new List<int> { pivot }).Union(QuickSort(greater));
+            }
+        }
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            int[] arr = new int[] { 10, 5, 2, 3 };
+            Console.WriteLine(string.Join(", ", QuickSort(arr)));
         }
     }
 }
